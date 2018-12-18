@@ -16,9 +16,10 @@ RUN echo '0 3 * * 0 root /bin/bash -c "/usr/bin/supervisorctl stop nxfilter && /
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY cfg.properties /nxfilter/conf/cfg.properties
+COPY run.sh /
 
-RUN if [ -z "$IS_MASTER" ];then echo "master_ip = $MASTER_IP" >> /nxfilter/conf/cfg.properties; fi
+RUN chmod +x /run.sh
 
 EXPOSE 80 443 53 53/udp
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/run.sh"]
