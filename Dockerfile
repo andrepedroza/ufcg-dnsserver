@@ -10,7 +10,7 @@ RUN apt update \
 RUN wget -O /root/nxfilter.zip http://www.nxfilter.org/download/nxfilter-3.5.1.zip && mkdir -p /nxfilter && unzip /root/nxfilter.zip -d /nxfilter && rm /root/nxfilter.zip
 RUN sed -i -e 's/Xmx512m/server/g' /nxfilter/bin/startup.sh
 RUN chmod +x /nxfilter/bin/startup.sh && chmod +x /nxfilter/bin/update-sh.sh && chmod +x /nxfilter/bin/shutdown.sh
-RUN mkdir -p /nxfilter/default && find /nxfilter/ | grep '/nxfilter/\(conf\|db\)' | xargs -I {} mv {} /nxfilter/default
+RUN mkdir -p /nxfilter/default && mv {/nxfilter/conf,/nxfilter/db} /nxfilter/default
 
 #Add cron job to update blacklist.
 RUN echo '0 3 * * 0 root /bin/bash -c "/usr/bin/supervisorctl stop nxfilter && /nxfilter/bin/shutdown.sh && /nxfilter/bin/update-sh.sh && /usr/bin/supervisorctl start nxfilter"' > /etc/cron.d/update-blacklist
