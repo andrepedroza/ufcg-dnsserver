@@ -21,4 +21,8 @@ else
   echo "cluster_mode = $CLUSTER_MODE" >> /nxfilter/conf/cfg.properties
 fi
 
-supervisord
+if [ "$CLUSTER_MODE" == "2" ];then
+  /nxfilter/bin/startup.sh
+else
+  supervisord
+fi
