@@ -8,12 +8,14 @@ else
   cp -R /nxfilter/conf.default/* /nxfilter/conf/
 fi
 
+#Verify Cluster Mode
 if [ "$CLUSTER_MODE" == "2" ];then
   echo "master_ip = $MASTER_IP" >> /nxfilter/conf/cfg.properties
 else
   export CLUSTER_MODE=1
 fi
 
+#Verify Config File
 if grep -Fxq "cluster_mode" /nxfilter/conf/cfg.properties;then
   echo "Cluster mode found, skip..."
 else
@@ -21,8 +23,8 @@ else
   echo "cluster_mode = $CLUSTER_MODE" >> /nxfilter/conf/cfg.properties
 fi
 
-if [ "$CLUSTER_MODE" == "2" ];then
-  /nxfilter/bin/startup.sh
-else
-  supervisord
-fi
+#Update Shallalist
+/nxfilter/bin/update-sh.sh
+
+#Start SupervisorD
+supervisord
