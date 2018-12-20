@@ -8,7 +8,7 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O /root/nxfilter.zip http://www.nxfilter.org/download/nxfilter-3.5.1.zip && mkdir -p /nxfilter && unzip /root/nxfilter.zip -d /nxfilter && rm /root/nxfilter.zip
-RUN sed -i -e 's/Xmx512m/server/g' /nxfilter/bin/startup.sh
+RUN sed -i -e 's/Xmx512m/Xmx1024m/g' /nxfilter/bin/startup.sh
 RUN chmod +x /nxfilter/bin/startup.sh && chmod +x /nxfilter/bin/update-sh.sh && chmod +x /nxfilter/bin/shutdown.sh
 COPY cfg.properties /nxfilter/conf/cfg.properties
 RUN cp -R /nxfilter/conf /nxfilter/conf.default
