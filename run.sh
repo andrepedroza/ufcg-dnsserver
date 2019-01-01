@@ -26,5 +26,5 @@ fi
 #Update Shallalist
 /nxfilter/bin/update-sh.sh
 
-#Start SupervisorD
-supervisord
+#Start NxFilter
+/nxfilter/bin/startup.sh
