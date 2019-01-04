@@ -15,13 +15,8 @@ else
   export CLUSTER_MODE=1
 fi
 
-#Verify Config File
-if grep -Fxq "cluster_mode" /nxfilter/conf/cfg.properties;then
-  echo "Cluster mode found, skip..."
-else
-  echo "Settting up Cluster mode to $CLUSTER_MODE"
-  echo "cluster_mode = $CLUSTER_MODE" >> /nxfilter/conf/cfg.properties
-fi
+#Change Cluster Mode If Needed
+sed -i -e "s/cluster_mode = 0/cluster_mode = $CLUSTER_MODE/g" /nxfilter/conf/cfg.properties
 
 #Update Shallalist
 /nxfilter/bin/update-sh.sh
